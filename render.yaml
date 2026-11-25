@@ -1,0 +1,19 @@
+# Render — test hosting only (free tier; see README.md).
+# Deploy: Render dashboard → New → Background Worker → connect this repo
+# (or Blueprint with this file) → set TELEGRAM_BOT_TOKEN in the dashboard.
+# Do NOT put the token in this file or in git.
+# pricebot.db lives on the instance's ephemeral disk on the free tier, so
+# watches are lost on redeploy — back it up before redeploying.
+services:
+  - type: worker
+    name: price-bot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: AFFILIO_ID
+        sync: false
+      - key: AFFILIO_URL_TEMPLATE
+        sync: false
